@@ -1,0 +1,40 @@
+@startuml
+' Diagrama de clases Parking
+
+class Vehicle {
+  - plate: String
+  - type: VehicleType
+  - residentAccumulatedMinutes: long
+}
+
+class Stay {
+  - id: Long
+  - plate: String
+  - entryTime: Calendar
+  - exitTime: Calendar
+}
+
+enum VehicleType {
+  OFICIAL
+  RESIDENTE
+  NO_RESIDENTE
+}
+
+class ParkingManagementService {
+  +registerEntry(plate: String)
+  +registerExit(plate: String): double
+  +addOfficial(plate: String)
+  +addResident(plate: String)
+  +startMonth()
+}
+
+class ResidentPaymentReportService {
+  +generateResidentPaymentsReport(filename: String)
+}
+
+Vehicle "1" -- "*" Stay : tiene >
+
+ParkingManagementService ..> Vehicle
+ParkingManagementService ..> Stay
+ResidentPaymentReportService ..> Vehicle
+@enduml

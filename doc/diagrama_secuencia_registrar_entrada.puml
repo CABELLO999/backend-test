@@ -1,0 +1,16 @@
+@startuml
+actor Empleado
+participant Frontend
+participant "ParkingManagementController" as Controller
+participant "ParkingManagementService" as Service
+participant "StayRepository" as StayRepo
+
+Empleado -> Frontend : Introduce placa y pulsa "Registrar entrada"
+Frontend -> Controller : POST /api/parking/entrada?plate=XXX
+Controller -> Service : registerEntry(plate)
+Service -> StayRepo : save(new Stay(plate, Calendar.getInstance()))
+StayRepo --> Service : Stay guardada
+Service --> Controller : OK
+Controller --> Frontend : OK
+Frontend --> Empleado : Mensaje de éxito
+@enduml
